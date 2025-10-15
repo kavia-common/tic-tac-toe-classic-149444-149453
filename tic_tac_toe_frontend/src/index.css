@@ -1,13 +1,212 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* Ocean Professional Theme */
+  --primary: #3b82f6;
+  --secondary: #64748b;
+  --success: #06b6d4;
+  --error: #EF4444;
+  --background: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+
+  --radius: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 6px 20px rgba(17, 24, 39, 0.08);
+  --shadow-lg: 0 12px 40px rgba(17, 24, 39, 0.12);
+  --ring: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 50% -20%, rgba(59,130,246,0.10), rgba(248,250,252,1)),
+    var(--background);
+}
+
+/* App layout */
+.app-root {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+.app-surface {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 28px 24px;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+.app-surface:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+/* Status bar */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  background: #eef2ff;
+  color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.status--turn {
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--primary);
+}
+
+.status--win {
+  background: rgba(6, 182, 212, 0.10);
+  color: var(--success);
+}
+
+.status--draw {
+  background: rgba(100, 116, 139, 0.12);
+  color: var(--secondary);
+}
+
+/* Board styles */
+.game-area {
+  display: grid;
+  place-items: center;
+  margin: 6px 0 16px;
+}
+
+.board {
+  display: grid;
+  gap: 12px;
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Responsive sizing for squares: use min(120px, vw-based) */
+.square {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid rgba(100,116,139,0.15);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+.square:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.12);
+  border-color: rgba(59,130,246,0.35);
+}
+
+.square:active {
+  transform: translateY(0);
+}
+
+.square:disabled {
+  cursor: default;
+  opacity: 0.98;
+  transform: none;
+}
+
+.square-value {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.square-x {
+  color: var(--primary);
+}
+
+.square-o {
+  color: var(--success);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(59,130,246,0.4);
+  background: linear-gradient(180deg, rgba(59,130,246,0.95), rgba(59,130,246,0.85));
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(59,130,246,0.25);
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(59,130,246,0.3);
+  filter: brightness(1.02);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+/* Responsive scaling for small screens */
+@media (max-width: 420px) {
+  .app-surface {
+    padding: 20px 16px;
+  }
+  .square {
+    width: 86px;
+    height: 86px;
+    border-radius: 14px;
+  }
+  .square-value {
+    font-size: 32px;
+  }
+  .title {
+    font-size: 20px;
+  }
 }
